@@ -12,19 +12,24 @@ const Home = () => {
     setSubSectorName("");
   };
 
+  // console.log(sectorName, subSector);
+  // console.log(subSectorName, subSector1);
+
   useEffect(() => {
     const filteredSubsectors = subSelectors?.filter(
       (element) => element?.sectorId == sectorName?.split(",")[1]
     );
-    setSubSector(filteredSubsectors ? filteredSubsectors : []);
+    setSubSector(filteredSubsectors);
   }, [sectorName]);
 
   useEffect(() => {
-    const filteredSubsectors1 = subSelectors1?.filter(
-      (element) => element?.subSelectorsId == subSectorName?.split(",")[1]
-    );
+    const filteredSubsectors1 = subSelectors1?.filter((element) => {
+      console.log(subSectorName?.split(",")[1]);
+      return element?.subSelectorsId === subSectorName?.split(",")[1];
+    });
+
     setSubSector1(filteredSubsectors1);
-  }, [subSectorName, sectorName]);
+  }, [subSectorName]);
 
   return (
     <div className="min-h-screen flex justify-center items-center">
@@ -47,7 +52,7 @@ const Home = () => {
           className="text-sm py-1 border-solid border-2 border-cyan-200 outline-none"
         >
           {" "}
-          <option disabled>Select</option>
+          <option>Select</option>
           {selectors?.map((option) => (
             <option key={option.id} value={[option.value, option.id]}>
               {option.name}
@@ -60,6 +65,7 @@ const Home = () => {
             onChange={(e) => setSubSectorName(e.target.value)}
             className="text-sm py-1 border-solid border-2 border-cyan-200 outline-none"
           >
+            <option disabled>Select</option>
             {subSector?.map((option) => (
               <option key={option.id} value={[option.value, option.id]}>
                 {option.name}
@@ -72,6 +78,7 @@ const Home = () => {
             required
             className="text-sm py-1 border-solid border-2 border-cyan-200 outline-none"
           >
+            <option disabled>Select</option>
             {subSector1?.map((option) => (
               <option key={option.id} value={[option.value, option.id]}>
                 {option.name}
