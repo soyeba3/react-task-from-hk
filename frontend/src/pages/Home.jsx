@@ -1,35 +1,55 @@
 import { useEffect, useState } from "react";
-import { selectors, subSelectors, subSelectors1 } from "../components/formData";
+import {
+  sectors,
+  subSectors,
+  subSectors1,
+  subSectors2,
+} from "../components/formData";
 
 const Home = () => {
   const [sectorName, setSectorName] = useState("");
   const [subSectorName, setSubSectorName] = useState("");
+  const [subSector1Name, setSubSector1Name] = useState("");
   const [subSector, setSubSector] = useState([]);
   const [subSector1, setSubSector1] = useState([]);
+  const [subSector2, setSubSector2] = useState([]);
 
   const handleSectorName = (e) => {
     setSectorName(e.target.value);
     setSubSectorName("");
   };
 
-  // console.log(sectorName, subSector);
-  // console.log(subSectorName, subSector1);
+  const handleSubSectorName = (e) => {
+    setSubSectorName(e.target.value);
+    setSubSector1Name("");
+  };
+
+  const handleSubSector1Name = (e) => {
+    setSubSector1Name(e.target.value);
+  };
 
   useEffect(() => {
-    const filteredSubsectors = subSelectors?.filter(
+    const filteredSubsectors = subSectors?.filter(
       (element) => element?.sectorId == sectorName?.split(",")[1]
     );
     setSubSector(filteredSubsectors);
   }, [sectorName]);
 
   useEffect(() => {
-    const filteredSubsectors1 = subSelectors1?.filter((element) => {
-      console.log(subSectorName?.split(",")[1]);
-      return element?.subSelectorsId === subSectorName?.split(",")[1];
+    const filteredSubsectors1 = subSectors1?.filter((element) => {
+      const id = subSectorName?.split(",")[1];
+      return element?.subSectorId == id;
     });
-
     setSubSector1(filteredSubsectors1);
   }, [subSectorName]);
+
+  useEffect(() => {
+    const filteredSubsectors2 = subSectors2?.filter((element) => {
+      const id = subSector1Name?.split(",")[1];
+      return element?.subSector1Id == id;
+    });
+    setSubSector2(filteredSubsectors2);
+  }, [subSector1Name]);
 
   return (
     <div className="min-h-screen flex justify-center items-center">
@@ -53,7 +73,7 @@ const Home = () => {
         >
           {" "}
           <option>Select</option>
-          {selectors?.map((option) => (
+          {sectors?.map((option) => (
             <option key={option.id} value={[option.value, option.id]}>
               {option.name}
             </option>
@@ -62,10 +82,10 @@ const Home = () => {
         {subSector.length > 0 && (
           <select
             required
-            onChange={(e) => setSubSectorName(e.target.value)}
+            onChange={handleSubSectorName}
             className="text-sm py-1 border-solid border-2 border-cyan-200 outline-none"
           >
-            <option disabled>Select</option>
+            <option>Select</option>
             {subSector?.map((option) => (
               <option key={option.id} value={[option.value, option.id]}>
                 {option.name}
@@ -76,10 +96,24 @@ const Home = () => {
         {subSector1.length > 0 && (
           <select
             required
+            onChange={handleSubSector1Name}
             className="text-sm py-1 border-solid border-2 border-cyan-200 outline-none"
           >
-            <option disabled>Select</option>
+            <option>Select</option>
             {subSector1?.map((option) => (
+              <option key={option.id} value={[option.value, option.id]}>
+                {option.name}
+              </option>
+            ))}
+          </select>
+        )}
+        {subSector2.length > 0 && (
+          <select
+            required
+            className="text-sm py-1 border-solid border-2 border-cyan-200 outline-none"
+          >
+            <option>Select</option>
+            {subSector2?.map((option) => (
               <option key={option.id} value={[option.value, option.id]}>
                 {option.name}
               </option>
