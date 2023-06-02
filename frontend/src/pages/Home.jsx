@@ -72,7 +72,7 @@ const Home = () => {
           className="text-sm py-1 border-solid border-2 border-cyan-200 outline-none"
         >
           {" "}
-          <option>Select</option>
+          <option value="">Select</option>
           {sectors?.map((option) => (
             <option key={option.id} value={[option.value, option.id]}>
               {option.name}
@@ -85,7 +85,7 @@ const Home = () => {
             onChange={handleSubSectorName}
             className="text-sm py-1 border-solid border-2 border-cyan-200 outline-none"
           >
-            <option>Select</option>
+            <option value="">Select</option>
             {subSector?.map((option) => (
               <option key={option.id} value={[option.value, option.id]}>
                 {option.name}
@@ -99,7 +99,7 @@ const Home = () => {
             onChange={handleSubSector1Name}
             className="text-sm py-1 border-solid border-2 border-cyan-200 outline-none"
           >
-            <option>Select</option>
+            <option value="">Select</option>
             {subSector1?.map((option) => (
               <option key={option.id} value={[option.value, option.id]}>
                 {option.name}
@@ -112,7 +112,7 @@ const Home = () => {
             required
             className="text-sm py-1 border-solid border-2 border-cyan-200 outline-none"
           >
-            <option>Select</option>
+            <option value="">Select</option>
             {subSector2?.map((option) => (
               <option key={option.id} value={[option.value, option.id]}>
                 {option.name}
