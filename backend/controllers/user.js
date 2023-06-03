@@ -11,7 +11,7 @@ const allUsers = async (req, res, next) => {
 };
 
 //Add new User
-const addUser = async (req, res, next) => {
+const addUser = async (req, res) => {
   const user = new User(req.body);
   try {
     const savedUser = await user.save();
@@ -21,7 +21,22 @@ const addUser = async (req, res, next) => {
   }
 };
 
+//Update User
+const updateUser = async (req, res) => {
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      req.params.id,
+      { $set: req.body },
+      { new: true }
+    );
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
 module.exports = {
   allUsers,
   addUser,
+  updateUser,
 };

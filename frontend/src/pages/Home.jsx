@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   sectors,
   subSectors,
@@ -18,21 +20,31 @@ const Home = () => {
   const [subSector, setSubSector] = useState([]);
   const [subSector1, setSubSector1] = useState([]);
   const [subSector2, setSubSector2] = useState([]);
+  const [resData, setResData] = useState(null);
 
+  console.log(resData);
+
+  // Catch Main Sector Name
   const handleSectorName = (e) => {
     setSectorName(e.target.value);
     setSubSectorName("");
+    setSubSector1Name("");
+    setSubSector2Name("");
   };
 
+  // Catch Sub Sector Name
   const handleSubSectorName = (e) => {
     setSubSectorName(e.target.value);
     setSubSector1Name("");
   };
 
+  // Catch Sub Sector 1 Name
   const handleSubSector1Name = (e) => {
     setSubSector1Name(e.target.value);
+    setSubSector2Name("");
   };
 
+  // Filter Sub Sector using sector id that already selected by user
   useEffect(() => {
     const filteredSubsectors = subSectors?.filter(
       (element) => element?.sectorId == sectorName?.split(",")[1]
@@ -40,6 +52,7 @@ const Home = () => {
     setSubSector(filteredSubsectors);
   }, [sectorName]);
 
+  // Filter Sub Sector 1 using sub sector id that already selected by user
   useEffect(() => {
     const filteredSubsectors1 = subSectors1?.filter((element) => {
       const id = subSectorName?.split(",")[1];
@@ -48,6 +61,7 @@ const Home = () => {
     setSubSector1(filteredSubsectors1);
   }, [subSectorName]);
 
+  // Filter Sub Sector 2 using sub sector 1 id that already selected by user
   useEffect(() => {
     const filteredSubsectors2 = subSectors2?.filter((element) => {
       const id = subSector1Name?.split(",")[1];
@@ -56,7 +70,7 @@ const Home = () => {
     setSubSector2(filteredSubsectors2);
   }, [subSector1Name]);
 
-  // for user sector
+  // Finally catch the sector that user involved in
   useEffect(() => {
     if (subSector2Name) {
       setUserSector(subSector2Name);
@@ -76,13 +90,34 @@ const Home = () => {
     agree: true,
   };
 
-  // Post Data
+  // Post and update Data to database
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      await axios.post("http://localhost:5000/api/user/add_user", userData);
-    } catch (error) {
-      console.log("error");
+    if (resData?._id) {
+      try {
+        const response = await axios.put(
+          `http://localhost:5000/api/user/${resData?._id}`,
+          userData
+        );
+        if (response.data) {
+          toast.success("User Updated Successfully");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      try {
+        const response = await axios.post(
+          "http://localhost:5000/api/user/add_user",
+          userData
+        );
+        if (response.data) {
+          toast.success("User Added Successfully");
+        }
+        setResData(response.data);
+      } catch (error) {
+        console.log("error");
+      }
     }
   };
 
@@ -175,6 +210,7 @@ const Home = () => {
           Save
         </button>
       </form>
+      <ToastContainer hideProgressBar autoClose={1000} />
     </div>
   );
 };
