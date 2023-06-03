@@ -18,6 +18,10 @@ const connect = () => {
 app.use(express.json());
 app.use("/api/user", userRoute);
 
+app.get("/", (req, res) => {
+  res.send("Home Page");
+});
+
 app.listen(5000, (req, res) => {
   connect();
   console.log(`Server is listening on port 5000`);
