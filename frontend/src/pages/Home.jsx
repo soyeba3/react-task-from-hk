@@ -22,8 +22,6 @@ const Home = () => {
   const [subSector2, setSubSector2] = useState([]);
   const [resData, setResData] = useState(null);
 
-  console.log(resData);
-
   // Catch Main Sector Name
   const handleSectorName = (e) => {
     setSectorName(e.target.value);
@@ -128,7 +126,7 @@ const Home = () => {
           to="/users"
           className="w-full bg-cyan-600 text-white px-5 py-1 rounded-sm"
         >
-          All Users
+          Users List
         </Link>
       </div>
       <form
@@ -207,7 +205,7 @@ const Home = () => {
           <input required type="checkbox" name="" id="" /> Agree to terms
         </label>
         <button type="submit" className="w-full bg-cyan-600 text-white py-1">
-          Save
+          {resData?._id ? "Update" : "Save"}
         </button>
       </form>
       <ToastContainer hideProgressBar autoClose={1000} />
