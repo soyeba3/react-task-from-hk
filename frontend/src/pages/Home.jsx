@@ -94,7 +94,7 @@ const Home = () => {
     if (resData?._id) {
       try {
         const response = await axios.put(
-          `http://localhost:5000/api/user/${resData?._id}`,
+          `https://hk-backend-ro4g.onrender.com/api/user/${resData?._id}`,
           userData
         );
         if (response.data) {
@@ -106,7 +106,7 @@ const Home = () => {
     } else {
       try {
         const response = await axios.post(
-          "http://localhost:5000/api/user/add_user",
+          "https://hk-backend-ro4g.onrender.com/api/user/add_user",
           userData
         );
         if (response.data) {

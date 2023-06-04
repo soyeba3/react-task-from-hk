@@ -10,7 +10,7 @@ const UserList = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/user/allUsers"
+          "https://hk-backend-ro4g.onrender.com/api/user/allUsers"
         );
         setData(response.data);
       } catch (error) {
@@ -19,7 +19,6 @@ const UserList = () => {
     };
     fetchData();
   }, []);
-
 
   return (
     <div className="m-4 flex flex-col justify-center items-center gap-3">
